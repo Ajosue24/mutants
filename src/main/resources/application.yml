@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: mutants
+  profiles:
+    active: dev
+  jmx:
+    enabled: false
+  session:
+    store-type: none
+  jackson:
+    time-zone: America/Bogota
+
+server:
+  servlet:
+    context-path: /api
+
