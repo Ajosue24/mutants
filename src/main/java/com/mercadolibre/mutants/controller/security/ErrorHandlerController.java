@@ -12,8 +12,8 @@ public class ErrorHandlerController {
 
 
     @ExceptionHandler(value = DNAValidationException.class)
-    public ResponseEntity<?> connectionsThirdPartiesException(DNAValidationException dnaValidationException) {
-        return new ResponseEntity<>(new StandardResponse(dnaValidationException.getMessage(), HttpStatus.BAD_REQUEST.name(), null), HttpStatus.BAD_REQUEST);
+    public ResponseEntity<StandardResponse<Object>> connectionsThirdPartiesException(DNAValidationException dnaValidationException) {
+        return new ResponseEntity<>(new StandardResponse<>(dnaValidationException.getMessage(), HttpStatus.BAD_REQUEST.name(), null), HttpStatus.BAD_REQUEST);
     }
 
 }

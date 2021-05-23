@@ -30,7 +30,7 @@ public class HumanDNAValidationImpl implements HumanDNAValidationService {
 
 
     @Override
-    public Boolean isMutant(HumanDNARequestDTO dna) {
+    public boolean isMutant(HumanDNARequestDTO dna) {
         if (!dnaValidatorUtil.validateIfDNAIsValidToCheck(dna.getDna()))
             throw new DNAValidationException(BusinessMessages.DNA_WAS_NOT_VALIDATED.message());
         String[][] matrix;
@@ -47,13 +47,14 @@ public class HumanDNAValidationImpl implements HumanDNAValidationService {
 
         int cantSequence = dnaValidatorProperties.getDnaCantSequence();
         if (MatrixManagementUtil.validateAllCombinations(MatrixManagementUtil.getRowsListFromMatrix(matrix), dnaValidatorProperties.getDnaCantSameLetters()) > cantSequence)
-            return Boolean.TRUE;
+            return true;
         if (MatrixManagementUtil.validateAllCombinations(MatrixManagementUtil.getColumnsListFromMatrix(matrix), dnaValidatorProperties.getDnaCantSameLetters()) > cantSequence)
-            return Boolean.TRUE;
+            return true;
         if (MatrixManagementUtil.validateAllCombinations(MatrixManagementUtil.getAllCombinationOblique(matrix), dnaValidatorProperties.getDnaCantSameLetters()) > cantSequence)
-            return Boolean.TRUE;
+            return true;
 
-        return Boolean.FALSE;
+
+        return false;
     }
 
 }

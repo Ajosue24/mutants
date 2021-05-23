@@ -20,7 +20,7 @@ public class DNAValidatorUtil {
      * @param dna user-obtained array
      * @return false if is invalid DNA
      */
-    public Boolean validateIfIsValidDNA(String[][] dna) {
+    public boolean validateIfIsValidDNA(String[][] dna) {
         List<String> allMatrixElementList = Arrays.stream(dna).flatMap(Arrays::stream).collect(Collectors.toList());
         List<String> validCharList = Arrays.stream(dnaValidatorProperties.getDnaValidChars()).collect(Collectors.toList());
         return allMatrixElementList.stream().noneMatch(obj -> validCharList.stream().noneMatch(obj::contains));
@@ -31,7 +31,7 @@ public class DNAValidatorUtil {
      * @param dna user-obtained array
      * @return false if is will not checked
      */
-    public Boolean validateIfDNAIsValidToCheck(String[] dna) {
+    public boolean validateIfDNAIsValidToCheck(String[] dna) {
         return dna != null && (dnaValidatorProperties.getDnaCantSameLetters() < dna.length  | dnaValidatorProperties.getDnaCantSameLetters() < dna[0].length());
     }
 

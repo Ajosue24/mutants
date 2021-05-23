@@ -2,9 +2,9 @@ package com.mercadolibre.mutants.configuration;
 
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Configuration;
 
-@Component
+@Configuration
 public class DNAValidatorProperties {
 
 
@@ -19,9 +19,6 @@ public class DNAValidatorProperties {
     @Value("${dna-validator.dna-cant-sequence}")
     @Getter
     private Integer dnaCantSequence;
-
-
-
 
 
 }
