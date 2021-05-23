@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Data
 @Entity
 @NoArgsConstructor
-@Table(name = "recors_dna")
+@Table(name = "records_dna")
 public class RecordsDNAEntity implements Serializable {
 
     /**

@@ -5,8 +5,8 @@ import com.mercadolibre.mutants.repository.RecordsDNARepository;
 import com.mercadolibre.mutants.repository.service.RecordsDNAService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.Arrays;
 import java.util.Optional;
 
@@ -24,16 +24,19 @@ public class RecordsDNAServiceImpl implements RecordsDNAService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public long countAllByMutantTrue() {
         return recordsDNARepository.countByIsMutantTrue();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public long countAllByMutantFalse() {
         return recordsDNARepository.countByIsMutantFalse();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<RecordsDNAEntity> findAllByDNA(String[] dna) {
         return recordsDNARepository.findAllByDna(Arrays.toString(dna));
     }
