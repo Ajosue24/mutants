@@ -57,9 +57,7 @@ public class HumanDNAValidationImpl implements HumanDNAValidationService {
             return true;
         if (MatrixManagementUtil.validateAllCombinations(MatrixManagementUtil.getColumnsListFromMatrix(matrix), dnaValidatorProperties.getDnaCantSameLetters()) > cantSequence)
             return true;
-        if (MatrixManagementUtil.validateAllCombinations(MatrixManagementUtil.getAllCombinationOblique(matrix), dnaValidatorProperties.getDnaCantSameLetters()) > cantSequence)
-            return true;
-        return false;
+        return MatrixManagementUtil.validateAllCombinations(MatrixManagementUtil.getAllCombinationOblique(matrix), dnaValidatorProperties.getDnaCantSameLetters()) > cantSequence;
     }
 
 
