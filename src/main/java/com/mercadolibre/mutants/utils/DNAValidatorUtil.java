@@ -28,8 +28,8 @@ public class DNAValidatorUtil {
 
     /**
      * Validate if dna is invalid to check
-     * @param dna
-     * @return
+     * @param dna user-obtained array
+     * @return false if is will not checked
      */
     public Boolean validateIfDNAIsValidToCheck(String[] dna) {
         return dna != null && (dnaValidatorProperties.getDnaCantSameLetters() < dna.length  | dnaValidatorProperties.getDnaCantSameLetters() < dna[0].length());

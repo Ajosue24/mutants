@@ -19,9 +19,9 @@ public class MutantScannerController {
     private HumanDNAValidationService humanDNAValidationService;
 
     @PostMapping
-    public ResponseEntity<?> validateDNA(HumanDNARequestDTO humanDNARequestDTO){
+    public ResponseEntity<StandardResponse<Object>> validateDNA(HumanDNARequestDTO humanDNARequestDTO){
         return humanDNAValidationService.isMutant(humanDNARequestDTO)
-                ? new ResponseEntity<>(new StandardResponse(BusinessMessages.DNA_IS_MUTANTS.message(),HttpStatus.OK.name(),Boolean.TRUE), HttpStatus.OK)
-                : new ResponseEntity<>(new StandardResponse(BusinessMessages.DNA_IS_HUMAN.message(),HttpStatus.OK.name(),Boolean.FALSE), HttpStatus.FORBIDDEN);
+                ? new ResponseEntity<>(new StandardResponse<>(BusinessMessages.DNA_IS_MUTANTS.message(), HttpStatus.OK.name(), Boolean.TRUE), HttpStatus.OK)
+                : new ResponseEntity<>(new StandardResponse<>(BusinessMessages.DNA_IS_HUMAN.message(), HttpStatus.OK.name(), Boolean.FALSE), HttpStatus.FORBIDDEN);
     }
 }

@@ -1,6 +1,7 @@
 package com.mercadolibre.mutants.controller;
 
 import com.mercadolibre.mutants.model.commons.StandardResponse;
+import com.mercadolibre.mutants.model.dto.StatsResponseDTO;
 import com.mercadolibre.mutants.service.StatsService;
 import com.mercadolibre.mutants.utils.BusinessMessages;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +20,8 @@ public class StatsController {
     private StatsService statsService;
 
     @GetMapping()
-    public ResponseEntity<?> getStats() {
-        return new ResponseEntity<>(new StandardResponse(BusinessMessages.THIS_IS_STATS.message(), HttpStatus.OK.name(), statsService.getStats()), HttpStatus.OK);
+    public ResponseEntity<StandardResponse<StatsResponseDTO>> getStats() {
+        return new ResponseEntity<>(new StandardResponse<>(BusinessMessages.THIS_IS_STATS.message(), HttpStatus.OK.name(), statsService.getStats()), HttpStatus.OK);
     }
 
 }
