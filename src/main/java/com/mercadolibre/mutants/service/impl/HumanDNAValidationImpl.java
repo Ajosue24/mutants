@@ -12,11 +12,10 @@ import com.mercadolibre.mutants.utils.MatrixManagementUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
+import java.util.Arrays;
 import java.util.Optional;
 
 @Service
-@Transactional
 public class HumanDNAValidationImpl implements HumanDNAValidationService {
 
     @Autowired
@@ -35,16 +34,24 @@ public class HumanDNAValidationImpl implements HumanDNAValidationService {
             throw new DNAValidationException(BusinessMessages.DNA_WAS_NOT_VALIDATED.message());
         String[][] matrix;
         matrix = MatrixManagementUtil.parseArrayToMatrix(dna.getDna());
-        if (matrix == null) throw new DNAValidationException(BusinessMessages.DNA_IS_INVALID.message());
         if (!dnaValidatorUtil.validateIfIsValidDNA(matrix))
             throw new DNAValidationException(BusinessMessages.DNA_HAS_INVALID_CHARACTERS.message());
 
 
-        Optional<RecordsDNAEntity> recordsDNAEntity = recordsDNAService.findAllByDNA(dna.getDna());
-        if (recordsDNAEntity.isPresent()) {
-            return recordsDNAEntity.get().isMutant();
+        Optional<RecordsDNAEntity> recordsDNAEntityOptional = recordsDNAService.findAllByDNA(dna.getDna());
+        if (recordsDNAEntityOptional.isPresent()) {
+            return recordsDNAEntityOptional.get().isMutant();
         }
 
+        boolean isMutant = validateIfMutant(matrix);
+        var recordsDNAEntity = new RecordsDNAEntity(Arrays.toString(dna.getDna()), isMutant);
+        recordsDNAService.save(recordsDNAEntity);
+
+        return isMutant;
+    }
+
+
+    public boolean validateIfMutant(String[][] matrix) {
         int cantSequence = dnaValidatorProperties.getDnaCantSequence();
         if (MatrixManagementUtil.validateAllCombinations(MatrixManagementUtil.getRowsListFromMatrix(matrix), dnaValidatorProperties.getDnaCantSameLetters()) > cantSequence)
             return true;
@@ -52,9 +59,8 @@ public class HumanDNAValidationImpl implements HumanDNAValidationService {
             return true;
         if (MatrixManagementUtil.validateAllCombinations(MatrixManagementUtil.getAllCombinationOblique(matrix), dnaValidatorProperties.getDnaCantSameLetters()) > cantSequence)
             return true;
-
-
         return false;
     }
+
 
 }

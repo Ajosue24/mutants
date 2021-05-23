@@ -1,5 +1,7 @@
 package com.mercadolibre.mutants.utils;
 
+import com.mercadolibre.mutants.exception.DNAValidationException;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -18,9 +20,10 @@ public class MatrixManagementUtil {
         try {
             int n = dnaArray.length;
             int m = dnaArray[0].length();
-            String[][] matrix = new String[n][m];
+            var matrix = new String[n][m];
             var matrixObj = new Object() {
-                int rows = 0, columns = 0;
+                int rows = 0;
+                int columns = 0;
             };
             Arrays.stream(dnaArray).forEach(row -> {
                         row.chars().forEachOrdered(eachRowElement -> matrix[matrixObj.rows][matrixObj.columns++] = String.valueOf((char) eachRowElement));
@@ -30,7 +33,7 @@ public class MatrixManagementUtil {
             );
             return matrix;
         } catch (IndexOutOfBoundsException | NullPointerException e) {
-            return null;
+            throw new DNAValidationException(BusinessMessages.DNA_IS_INVALID.message());
         }
     }
 
@@ -46,7 +49,7 @@ public class MatrixManagementUtil {
         var countRowsObj = new Object() {
             int count = 0;
         };
-        Arrays.stream(dnaMatrix).takeWhile((obj) -> countRowsObj.count < cantRow).forEachOrdered(row -> {
+        Arrays.stream(dnaMatrix).takeWhile(obj -> countRowsObj.count < cantRow).forEachOrdered(row -> {
             rows.add(Arrays.asList(row));
             countRowsObj.count++;
         });
@@ -65,7 +68,7 @@ public class MatrixManagementUtil {
         var countColumnsObj = new Object() {
             int count = 0;
         };
-        Arrays.stream(dnaMatrix).takeWhile((obj) -> countColumnsObj.count < cantColumns).forEachOrdered(column -> {
+        Arrays.stream(dnaMatrix).takeWhile(obj -> countColumnsObj.count < cantColumns).forEachOrdered(column -> {
             columns.add(Arrays.stream(dnaMatrix).map(o -> o[countColumnsObj.count]).collect(Collectors.toList()));
             countColumnsObj.count++;
         });
@@ -79,7 +82,8 @@ public class MatrixManagementUtil {
     public static List<List<String>> getAllCombinationOblique(String[][] dnaMatrix) {
         int cantRow = dnaMatrix.length;
         var countObj = new Object() {
-            int rows = 0, columns = 0;
+            int rows = 0;
+            int columns = 0;
         };
         List<String> leftToRightOblique = new ArrayList<>();
         List<String> rightToLeftOblique = new ArrayList<>();
