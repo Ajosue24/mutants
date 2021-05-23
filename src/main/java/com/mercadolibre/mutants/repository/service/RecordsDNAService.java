@@ -1,8 +1,6 @@
 package com.mercadolibre.mutants.repository.service;
 
 import com.mercadolibre.mutants.model.entity.RecordsDNAEntity;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -16,9 +14,6 @@ public interface RecordsDNAService {
     long countAllByMutantTrue();
 
     long countAllByMutantFalse();
-
-
-
 
 
 }
