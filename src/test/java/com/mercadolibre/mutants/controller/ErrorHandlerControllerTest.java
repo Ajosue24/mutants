@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class ErrorHandlerControllerTest {
+class ErrorHandlerControllerTest {
 
     @Test
     void ErrorHandlerControllerException() {

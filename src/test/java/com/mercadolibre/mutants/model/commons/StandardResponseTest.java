@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class StandardResponseTest {
+class StandardResponseTest {
 
 
     @Test

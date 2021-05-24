@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-public class DNAValidatorPropertiesTest {
+class DNAValidatorPropertiesTest {
 
     @Test
     void validatorPropertiesTest() {

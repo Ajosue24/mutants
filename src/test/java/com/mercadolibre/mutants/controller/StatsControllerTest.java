@@ -20,7 +20,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(StatsController.class)
-public class StatsControllerTest {
+class StatsControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -29,7 +29,7 @@ public class StatsControllerTest {
     private StatsService statsService;
 
     @Test
-    public void DNAScanWhenResponseIsTrue() throws Exception {
+    void DNAScanWhenResponseIsTrue() throws Exception {
         var statsResponseDTO = new StatsResponseDTO(40L, 100L, .4);
         var standardResponseDTO = new StandardResponse<>(BusinessMessages.THIS_IS_STATS.message(), HttpStatus.OK.name(), statsResponseDTO);
         Mockito.when(statsService.getStats()).thenReturn(statsResponseDTO);

@@ -17,7 +17,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(MutantScannerController.class)
-public class MutantScannerControllerTest {
+class MutantScannerControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -27,7 +27,7 @@ public class MutantScannerControllerTest {
 
 
     @Test
-    public void humanScanWhenResponseIsTrue() throws Exception {
+    void humanScanWhenResponseIsTrue() throws Exception {
         Mockito.when(humanDNAValidationService.isMutant(Mockito.any())).thenReturn(Boolean.TRUE);
         var mapper = new ObjectMapper();
         mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
@@ -39,7 +39,7 @@ public class MutantScannerControllerTest {
     }
 
     @Test
-    public void humanScanWhenIdResponseIsFalse() throws Exception {
+    void humanScanWhenIdResponseIsFalse() throws Exception {
         Mockito.when(humanDNAValidationService.isMutant(Mockito.any())).thenReturn(Boolean.FALSE);
         var mapper = new ObjectMapper();
         mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);

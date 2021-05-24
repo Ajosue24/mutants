@@ -32,7 +32,7 @@ public class DNAValidatorUtil {
      * @return false if is will not checked
      */
     public boolean validateIfDNAIsValidToCheck(String[] dna) {
-        return dna != null && (dnaValidatorProperties.getDnaCantSameLetters() < dna.length  | dnaValidatorProperties.getDnaCantSameLetters() < dna[0].length());
+        return dna != null && (dnaValidatorProperties.getDnaCantSameLetters() < dna.length  || dnaValidatorProperties.getDnaCantSameLetters() < dna[0].length());
     }
 
 }
