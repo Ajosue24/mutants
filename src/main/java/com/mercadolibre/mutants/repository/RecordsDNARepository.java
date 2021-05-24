@@ -11,6 +11,6 @@ public interface RecordsDNARepository extends CrudRepository<RecordsDNAEntity, L
 
     long countByIsMutantFalse();
 
-    Optional<RecordsDNAEntity> findAllByDna(String dna);
+    Optional<RecordsDNAEntity> findByDna(String dna);
 
 }

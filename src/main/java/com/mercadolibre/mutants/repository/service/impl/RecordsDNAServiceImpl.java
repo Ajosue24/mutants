@@ -20,7 +20,7 @@ public class RecordsDNAServiceImpl implements RecordsDNAService {
 
     @Override
     public void save(RecordsDNAEntity recordsDNAEntity) {
-        recordsDNARepository.save(recordsDNAEntity);
+       recordsDNARepository.save(recordsDNAEntity);
     }
 
     @Override
@@ -37,7 +37,7 @@ public class RecordsDNAServiceImpl implements RecordsDNAService {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<RecordsDNAEntity> findAllByDNA(String[] dna) {
-        return recordsDNARepository.findAllByDna(Arrays.toString(dna));
+    public Optional<RecordsDNAEntity> findByDna(String[] dna) {
+        return recordsDNARepository.findByDna(Arrays.toString(dna));
     }
 }

@@ -9,7 +9,7 @@ public interface RecordsDNAService {
 
     void save(RecordsDNAEntity recordsDNAEntity);
 
-    Optional<RecordsDNAEntity> findAllByDNA(String[] dna);
+    Optional<RecordsDNAEntity> findByDna(String[] dna);
 
     long countAllByMutantTrue();
 

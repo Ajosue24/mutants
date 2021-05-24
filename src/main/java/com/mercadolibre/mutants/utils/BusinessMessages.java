@@ -7,7 +7,8 @@ public enum BusinessMessages {
     DNA_HAS_INVALID_CHARACTERS("DNA has invalid characters"),
     DNA_IS_HUMAN("DNA IS FROM Human"),
     DNA_IS_MUTANTS("DNA IS FROM Mutant, Maybe Magneto will recruit you :)"),
-    THIS_IS_STATS("Stats are ");
+    THIS_IS_STATS("Stats are "),
+    UNSUPPORTED_OPERATION("Unsupported operation");
 
     private final String message;
 

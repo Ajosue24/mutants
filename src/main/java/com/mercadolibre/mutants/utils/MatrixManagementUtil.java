@@ -10,6 +10,8 @@ import java.util.stream.Collectors;
 
 public class MatrixManagementUtil {
 
+
+
     /**
      * from String array get matrix
      *
@@ -114,7 +116,7 @@ public class MatrixManagementUtil {
 
         var rowCombinationObj = new Object() {
             String previousChar = allRowElement.stream().findFirst().get().stream().findFirst().get();
-            int count = 0;
+            int count = 1;
             int cantComb = 0;
         };
         allRowElement.forEach(row -> row.forEach(elements -> {
@@ -122,16 +124,24 @@ public class MatrixManagementUtil {
                 rowCombinationObj.count++;
                 if (rowCombinationObj.count >= dnaCantSameLetters) {
                     rowCombinationObj.cantComb++;
-                    rowCombinationObj.count = 0;
+                    rowCombinationObj.count = 1;
                 }
             } else {
                 rowCombinationObj.previousChar = elements;
-                rowCombinationObj.count = 0;
+                rowCombinationObj.count = 1;
             }
         }));
         return rowCombinationObj.cantComb;
     }
 
+
+
+    /**
+     * Instantiates a new util.
+     */
+    private MatrixManagementUtil() {
+        throw new UnsupportedOperationException(BusinessMessages.UNSUPPORTED_OPERATION.message());
+    }
 
 
 }

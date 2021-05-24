@@ -38,7 +38,7 @@ public class HumanDNAValidationImpl implements HumanDNAValidationService {
             throw new DNAValidationException(BusinessMessages.DNA_HAS_INVALID_CHARACTERS.message());
 
 
-        Optional<RecordsDNAEntity> recordsDNAEntityOptional = recordsDNAService.findAllByDNA(dna.getDna());
+        Optional<RecordsDNAEntity> recordsDNAEntityOptional = recordsDNAService.findByDna(dna.getDna());
         if (recordsDNAEntityOptional.isPresent()) {
             return recordsDNAEntityOptional.get().isMutant();
         }
@@ -50,14 +50,14 @@ public class HumanDNAValidationImpl implements HumanDNAValidationService {
         return isMutant;
     }
 
-
+    @Override
     public boolean validateIfMutant(String[][] matrix) {
         int cantSequence = dnaValidatorProperties.getDnaCantSequence();
-        if (MatrixManagementUtil.validateAllCombinations(MatrixManagementUtil.getRowsListFromMatrix(matrix), dnaValidatorProperties.getDnaCantSameLetters()) > cantSequence)
-            return true;
-        if (MatrixManagementUtil.validateAllCombinations(MatrixManagementUtil.getColumnsListFromMatrix(matrix), dnaValidatorProperties.getDnaCantSameLetters()) > cantSequence)
-            return true;
-        return MatrixManagementUtil.validateAllCombinations(MatrixManagementUtil.getAllCombinationOblique(matrix), dnaValidatorProperties.getDnaCantSameLetters()) > cantSequence;
+        int cantCombinationsFounded = 0;
+        cantCombinationsFounded += MatrixManagementUtil.validateAllCombinations(MatrixManagementUtil.getRowsListFromMatrix(matrix), dnaValidatorProperties.getDnaCantSameLetters());
+        cantCombinationsFounded += MatrixManagementUtil.validateAllCombinations(MatrixManagementUtil.getColumnsListFromMatrix(matrix), dnaValidatorProperties.getDnaCantSameLetters());
+        cantCombinationsFounded += MatrixManagementUtil.validateAllCombinations(MatrixManagementUtil.getAllCombinationOblique(matrix), dnaValidatorProperties.getDnaCantSameLetters());
+        return cantCombinationsFounded > cantSequence;
     }
 
 
