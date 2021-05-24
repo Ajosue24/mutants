@@ -8,4 +8,5 @@ public interface HumanDNAValidationService {
     boolean isMutant(HumanDNARequestDTO dna);
 
     boolean validateIfMutant(String[][] matrix);
+
 }

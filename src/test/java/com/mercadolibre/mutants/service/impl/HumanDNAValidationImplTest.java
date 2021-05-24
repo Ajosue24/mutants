@@ -3,6 +3,7 @@ package com.mercadolibre.mutants.service.impl;
 import com.mercadolibre.mutants.configuration.DNAValidatorProperties;
 import com.mercadolibre.mutants.exception.DNAValidationException;
 import com.mercadolibre.mutants.model.dto.HumanDNARequestDTO;
+import com.mercadolibre.mutants.model.entity.RecordsDNAEntity;
 import com.mercadolibre.mutants.repository.service.RecordsDNAService;
 import com.mercadolibre.mutants.service.HumanDNAValidationService;
 import com.mercadolibre.mutants.utils.BusinessMessages;
@@ -13,11 +14,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import java.util.Arrays;
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
-public class HumanDNAValidationImplTest {
+class HumanDNAValidationImplTest {
 
 
     @Autowired
@@ -59,6 +65,30 @@ public class HumanDNAValidationImplTest {
         assertTrue(humanDNAValidationService.validateIfMutant(ConstantsTest.MUTANT_ROW_COMBINATION_DNA_MATRIX));
         assertTrue(humanDNAValidationService.validateIfMutant(ConstantsTest.MUTANT_COLUMN_DNA_MATRIX));
         assertTrue(humanDNAValidationService.validateIfMutant(ConstantsTest.MUTANT_OBLIQUE_DNA_MATRIX));
+    }
+
+
+    @Test
+    void getMutantFromDB(){
+        var requestDTO = new HumanDNARequestDTO(ConstantsTest.HUMAN_DNA);
+        var recordsDNAEntity = new RecordsDNAEntity(1L, null, Arrays.toString(ConstantsTest.HUMAN_DNA), true);
+        when(dnaValidatorUtil.validateIfDNAIsValidToCheck(ConstantsTest.HUMAN_DNA)).thenReturn(true);
+        when(dnaValidatorUtil.validateIfIsValidDNA(any(String[][].class))).thenReturn(true);
+        when(recordsDNAService.findByDna(requestDTO.getDna())).thenReturn(Optional.of(recordsDNAEntity));
+        assertTrue(humanDNAValidationService.isMutant(requestDTO));
+    }
+
+    @Test
+    void getMutantFromValidations(){
+        var requestDTO = new HumanDNARequestDTO(ConstantsTest.HUMAN_DNA);
+        var recordsDNAEntity = new RecordsDNAEntity(1L, null, Arrays.toString(ConstantsTest.HUMAN_DNA), false);
+        when(dnaValidatorProperties.getDnaCantSequence()).thenReturn(ConstantsTest.MUTANT_DNA_CANT_SEQUENCE);
+        when(dnaValidatorProperties.getDnaCantSameLetters()).thenReturn(ConstantsTest.MUTANT_DNA_CANT_SAME_LETTERS);
+        when(dnaValidatorUtil.validateIfDNAIsValidToCheck(ConstantsTest.HUMAN_DNA)).thenReturn(true);
+        when(dnaValidatorUtil.validateIfIsValidDNA(any(String[][].class))).thenReturn(true);
+        when(recordsDNAService.findByDna(requestDTO.getDna())).thenReturn(Optional.empty());
+        doNothing().when(recordsDNAService).save(recordsDNAEntity);
+        assertFalse(humanDNAValidationService.isMutant(requestDTO));
     }
 
 

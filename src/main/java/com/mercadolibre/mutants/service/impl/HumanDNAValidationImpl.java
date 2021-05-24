@@ -43,6 +43,7 @@ public class HumanDNAValidationImpl implements HumanDNAValidationService {
             return recordsDNAEntityOptional.get().isMutant();
         }
 
+
         boolean isMutant = validateIfMutant(matrix);
         var recordsDNAEntity = new RecordsDNAEntity(Arrays.toString(dna.getDna()), isMutant);
         recordsDNAService.save(recordsDNAEntity);
@@ -53,12 +54,11 @@ public class HumanDNAValidationImpl implements HumanDNAValidationService {
     @Override
     public boolean validateIfMutant(String[][] matrix) {
         int cantSequence = dnaValidatorProperties.getDnaCantSequence();
-        int cantCombinationsFounded = 0;
+        var cantCombinationsFounded = 0;
         cantCombinationsFounded += MatrixManagementUtil.validateAllCombinations(MatrixManagementUtil.getRowsListFromMatrix(matrix), dnaValidatorProperties.getDnaCantSameLetters());
         cantCombinationsFounded += MatrixManagementUtil.validateAllCombinations(MatrixManagementUtil.getColumnsListFromMatrix(matrix), dnaValidatorProperties.getDnaCantSameLetters());
         cantCombinationsFounded += MatrixManagementUtil.validateAllCombinations(MatrixManagementUtil.getAllCombinationOblique(matrix), dnaValidatorProperties.getDnaCantSameLetters());
         return cantCombinationsFounded > cantSequence;
     }
-
 
 }

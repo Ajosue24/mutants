@@ -13,7 +13,7 @@ class MatrixManagementUtilTest {
     @Test
     void parseArrayToMatrix() {
         var matrix = MatrixManagementUtil.parseArrayToMatrix(ConstantsTest.HUMAN_DNA);
-        assertArrayEquals(matrix, ConstantsTest.HUMAN_DNA_MATRIX);
+        assertArrayEquals(ConstantsTest.HUMAN_DNA_MATRIX,matrix);
     }
 
     @Test
@@ -27,19 +27,19 @@ class MatrixManagementUtilTest {
     @Test
     void getAllRowCombinations() {
         var matrix = MatrixManagementUtil.getRowsListFromMatrix(ConstantsTest.MUTANT_ROW_COMBINATION_DNA_MATRIX);
-        assertEquals(matrix, ConstantsTest.MUTANT_ROW_COMBINATION_DNA_MATRIX_TO_EXPECTED_COLLECTIONS);
+        assertEquals( ConstantsTest.MUTANT_ROW_COMBINATION_DNA_MATRIX_TO_EXPECTED_COLLECTIONS,matrix);
     }
 
     @Test
     void getAllColumnCombinations() {
         var matrix = MatrixManagementUtil.getColumnsListFromMatrix(ConstantsTest.MUTANT_COLUMN_DNA_MATRIX);
-        assertEquals(matrix, ConstantsTest.MUTANT_COLUMN_DNA_MATRIX_TO_EXPECTED_COLLECTIONS);
+        assertEquals( ConstantsTest.MUTANT_COLUMN_DNA_MATRIX_TO_EXPECTED_COLLECTIONS,matrix);
     }
 
     @Test
     void getAllObliqueCombinations() {
         var matrix = MatrixManagementUtil.getAllCombinationOblique(ConstantsTest.MUTANT_OBLIQUE_DNA_MATRIX);
-        assertEquals(matrix, ConstantsTest.MUTANT_OBLIQUE_DNA_MATRIX_TO_EXPECTED_COLLECTIONS);
+        assertEquals( ConstantsTest.MUTANT_OBLIQUE_DNA_MATRIX_TO_EXPECTED_COLLECTIONS,matrix);
     }
 
     @Test
