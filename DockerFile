@@ -1,0 +1,4 @@
+FROM openjdk:11.0.11-slim
+VOLUME /tmp
+COPY /build/libs/mutants-validator.jar /
+ENTRYPOINT ["java", "-jar", "/ipValidator.jar"]

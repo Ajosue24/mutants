@@ -24,6 +24,12 @@ dependencies {
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 }
 
+
+bootJar{
+	archiveName 'mutants-validator.jar'
+	launchScript()
+}
+
 test {
 	useJUnitPlatform()
 	finalizedBy jacocoTestReport
