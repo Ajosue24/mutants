@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HumanDNAValidationImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mutants</a> &gt; <a href="index.source.html" class="el_package">com.mercadolibre.mutants.service.impl</a> &gt; <span class="el_source">HumanDNAValidationImpl.java</span></div><h1>HumanDNAValidationImpl.java</h1><pre class="source lang-java linenums">package com.mercadolibre.mutants.service.impl;
+
+import com.mercadolibre.mutants.configuration.DNAValidatorProperties;
+import com.mercadolibre.mutants.exception.DNAValidationException;
+import com.mercadolibre.mutants.model.dto.HumanDNARequestDTO;
+import com.mercadolibre.mutants.model.entity.RecordsDNAEntity;
+import com.mercadolibre.mutants.repository.service.RecordsDNAService;
+import com.mercadolibre.mutants.service.HumanDNAValidationService;
+import com.mercadolibre.mutants.utils.BusinessMessages;
+import com.mercadolibre.mutants.utils.DNAValidatorUtil;
+import com.mercadolibre.mutants.utils.MatrixManagementUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.Arrays;
+import java.util.Optional;
+
+@Service
+<span class="fc" id="L19">public class HumanDNAValidationImpl implements HumanDNAValidationService {</span>
+
+    @Autowired
+    private DNAValidatorUtil dnaValidatorUtil;
+
+    @Autowired
+    private DNAValidatorProperties dnaValidatorProperties;
+
+    @Autowired
+    private RecordsDNAService recordsDNAService;
+
+
+    @Override
+    public boolean isMutant(HumanDNARequestDTO dna) {
+<span class="fc bfc" id="L33" title="All 2 branches covered.">        if (!dnaValidatorUtil.validateIfDNAIsValidToCheck(dna.getDna()))</span>
+<span class="fc" id="L34">            throw new DNAValidationException(BusinessMessages.DNA_WAS_NOT_VALIDATED.message());</span>
+        String[][] matrix;
+<span class="fc" id="L36">        matrix = MatrixManagementUtil.parseArrayToMatrix(dna.getDna());</span>
+<span class="fc bfc" id="L37" title="All 2 branches covered.">        if (!dnaValidatorUtil.validateIfIsValidDNA(matrix))</span>
+<span class="fc" id="L38">            throw new DNAValidationException(BusinessMessages.DNA_HAS_INVALID_CHARACTERS.message());</span>
+
+
+<span class="fc" id="L41">        Optional&lt;RecordsDNAEntity&gt; recordsDNAEntityOptional = recordsDNAService.findByDna(dna.getDna());</span>
+<span class="fc bfc" id="L42" title="All 2 branches covered.">        if (recordsDNAEntityOptional.isPresent()) {</span>
+<span class="fc" id="L43">            return recordsDNAEntityOptional.get().isMutant();</span>
+        }
+
+
+<span class="fc" id="L47">        boolean isMutant = validateIfMutant(matrix);</span>
+<span class="fc" id="L48">        var recordsDNAEntity = new RecordsDNAEntity(Arrays.toString(dna.getDna()), isMutant);</span>
+<span class="fc" id="L49">        recordsDNAService.save(recordsDNAEntity);</span>
+
+<span class="fc" id="L51">        return isMutant;</span>
+    }
+
+    @Override
+    public boolean validateIfMutant(String[][] matrix) {
+<span class="fc" id="L56">        int cantSequence = dnaValidatorProperties.getDnaCantSequence();</span>
+<span class="fc" id="L57">        var cantCombinationsFounded = 0;</span>
+<span class="fc" id="L58">        cantCombinationsFounded += MatrixManagementUtil.validateAllCombinations(MatrixManagementUtil.getRowsListFromMatrix(matrix), dnaValidatorProperties.getDnaCantSameLetters());</span>
+<span class="fc" id="L59">        cantCombinationsFounded += MatrixManagementUtil.validateAllCombinations(MatrixManagementUtil.getColumnsListFromMatrix(matrix), dnaValidatorProperties.getDnaCantSameLetters());</span>
+<span class="fc" id="L60">        cantCombinationsFounded += MatrixManagementUtil.validateAllCombinations(MatrixManagementUtil.getAllCombinationOblique(matrix), dnaValidatorProperties.getDnaCantSameLetters());</span>
+<span class="fc bfc" id="L61" title="All 2 branches covered.">        return cantCombinationsFounded &gt; cantSequence;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

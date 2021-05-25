@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BusinessMessages.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mutants</a> &gt; <a href="index.source.html" class="el_package">com.mercadolibre.mutants.utils</a> &gt; <span class="el_source">BusinessMessages.java</span></div><h1>BusinessMessages.java</h1><pre class="source lang-java linenums">package com.mercadolibre.mutants.utils;
+
+<span class="fc" id="L3">public enum BusinessMessages {</span>
+
+<span class="fc" id="L5">    DNA_WAS_NOT_VALIDATED(&quot;DNA was not validated &quot;),</span>
+<span class="fc" id="L6">    DNA_IS_INVALID(&quot;DNA is invalid &quot;),</span>
+<span class="fc" id="L7">    DNA_HAS_INVALID_CHARACTERS(&quot;DNA has invalid characters&quot;),</span>
+<span class="fc" id="L8">    DNA_IS_HUMAN(&quot;DNA IS FROM Human&quot;),</span>
+<span class="fc" id="L9">    DNA_IS_MUTANTS(&quot;DNA IS FROM Mutant, Maybe Magneto will recruit you :)&quot;),</span>
+<span class="fc" id="L10">    THIS_IS_STATS(&quot;Stats are &quot;),</span>
+<span class="fc" id="L11">    UNSUPPORTED_OPERATION(&quot;Unsupported operation&quot;);</span>
+
+    private final String message;
+
+<span class="fc" id="L15">    BusinessMessages(String message) {</span>
+<span class="fc" id="L16">        this.message = message;</span>
+<span class="fc" id="L17">    }</span>
+
+    public String message() {
+<span class="fc" id="L20">        return message;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

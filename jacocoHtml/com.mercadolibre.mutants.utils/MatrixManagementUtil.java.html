@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MatrixManagementUtil.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mutants</a> &gt; <a href="index.source.html" class="el_package">com.mercadolibre.mutants.utils</a> &gt; <span class="el_source">MatrixManagementUtil.java</span></div><h1>MatrixManagementUtil.java</h1><pre class="source lang-java linenums">package com.mercadolibre.mutants.utils;
+
+import com.mercadolibre.mutants.exception.DNAValidationException;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+
+public class MatrixManagementUtil {
+
+
+
+    /**
+     * from String array get matrix
+     *
+     * @param dnaArray userInput
+     * @return matrix
+     */
+    public static String[][] parseArrayToMatrix(String[] dnaArray) {
+        try {
+<span class="fc" id="L23">            int n = dnaArray.length;</span>
+<span class="fc" id="L24">            int m = dnaArray[0].length();</span>
+<span class="fc" id="L25">            var matrix = new String[n][m];</span>
+<span class="fc" id="L26">            var matrixObj = new Object() {</span>
+<span class="fc" id="L27">                int rows = 0;</span>
+<span class="fc" id="L28">                int columns = 0;</span>
+            };
+<span class="fc" id="L30">            Arrays.stream(dnaArray).forEach(row -&gt; {</span>
+<span class="fc" id="L31">                        row.chars().forEachOrdered(eachRowElement -&gt; matrix[matrixObj.rows][matrixObj.columns++] = String.valueOf((char) eachRowElement));</span>
+<span class="fc" id="L32">                        matrixObj.rows++;</span>
+<span class="fc" id="L33">                        matrixObj.columns = 0;</span>
+<span class="fc" id="L34">                    }</span>
+            );
+<span class="fc" id="L36">            return matrix;</span>
+<span class="fc" id="L37">        } catch (IndexOutOfBoundsException | NullPointerException e) {</span>
+<span class="fc" id="L38">            throw new DNAValidationException(BusinessMessages.DNA_IS_INVALID.message());</span>
+        }
+    }
+
+    /**
+     * looks like getColumnsListFromMatrix but iterator is per rows
+     *
+     * @param dnaMatrix org matrix
+     * @return list of rows
+     */
+    public static List&lt;List&lt;String&gt;&gt; getRowsListFromMatrix(String[][] dnaMatrix) {
+<span class="fc" id="L49">        int cantRow = dnaMatrix.length;</span>
+<span class="fc" id="L50">        List&lt;List&lt;String&gt;&gt; rows = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L51">        var countRowsObj = new Object() {</span>
+<span class="fc" id="L52">            int count = 0;</span>
+        };
+<span class="pc bpc" id="L54" title="1 of 2 branches missed.">        Arrays.stream(dnaMatrix).takeWhile(obj -&gt; countRowsObj.count &lt; cantRow).forEachOrdered(row -&gt; {</span>
+<span class="fc" id="L55">            rows.add(Arrays.asList(row));</span>
+<span class="fc" id="L56">            countRowsObj.count++;</span>
+<span class="fc" id="L57">        });</span>
+<span class="fc" id="L58">        return rows;</span>
+    }
+
+    /**
+     * looks like getRowsListFromMatrix but iterator is per columns
+     *
+     * @param dnaMatrix original matrix
+     * @return list of columns
+     */
+    public static List&lt;List&lt;String&gt;&gt; getColumnsListFromMatrix(String[][] dnaMatrix) {
+<span class="fc" id="L68">        int cantColumns = dnaMatrix[0].length;</span>
+<span class="fc" id="L69">        List&lt;List&lt;String&gt;&gt; columns = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L70">        var countColumnsObj = new Object() {</span>
+<span class="fc" id="L71">            int count = 0;</span>
+        };
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">        Arrays.stream(dnaMatrix).takeWhile(obj -&gt; countColumnsObj.count &lt; cantColumns).forEachOrdered(column -&gt; {</span>
+<span class="fc" id="L74">            columns.add(Arrays.stream(dnaMatrix).map(o -&gt; o[countColumnsObj.count]).collect(Collectors.toList()));</span>
+<span class="fc" id="L75">            countColumnsObj.count++;</span>
+<span class="fc" id="L76">        });</span>
+<span class="fc" id="L77">        return columns;</span>
+    }
+
+    /**
+     * @param dnaMatrix original matrix
+     * @return only oblique arrays
+     */
+    public static List&lt;List&lt;String&gt;&gt; getAllCombinationOblique(String[][] dnaMatrix) {
+<span class="fc" id="L85">        int cantRow = dnaMatrix.length;</span>
+<span class="fc" id="L86">        var countObj = new Object() {</span>
+<span class="fc" id="L87">            int rows = 0;</span>
+<span class="fc" id="L88">            int columns = 0;</span>
+        };
+<span class="fc" id="L90">        List&lt;String&gt; leftToRightOblique = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L91">        List&lt;String&gt; rightToLeftOblique = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L92">        Arrays.stream(dnaMatrix).forEach(row -&gt; {</span>
+<span class="fc" id="L93">            Arrays.stream(row).forEachOrdered(elements -&gt; {</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">                if (countObj.rows == countObj.columns) {</span>
+<span class="fc" id="L95">                    leftToRightOblique.add(elements);</span>
+                }
+<span class="fc bfc" id="L97" title="All 2 branches covered.">                if ((countObj.rows + countObj.columns) == cantRow - 1) {</span>
+<span class="fc" id="L98">                    rightToLeftOblique.add(elements);</span>
+                }
+<span class="fc" id="L100">                countObj.columns++;</span>
+<span class="fc" id="L101">            });</span>
+<span class="fc" id="L102">            countObj.rows++;</span>
+<span class="fc" id="L103">            countObj.columns = 0;</span>
+<span class="fc" id="L104">        });</span>
+<span class="fc" id="L105">        return Arrays.asList(leftToRightOblique, rightToLeftOblique);</span>
+    }
+
+    /**
+     * Validate all combinations and determinate if person is human or mutant
+     *
+     * @param allRowElement      matrix become into collections
+     * @param dnaCantSameLetters cant of combinations give per parameters
+     * @return cant of combinations in Integer
+     */
+    public static Integer validateAllCombinations(List&lt;List&lt;String&gt;&gt; allRowElement, Integer dnaCantSameLetters) {
+
+<span class="fc" id="L117">        var rowCombinationObj = new Object() {</span>
+<span class="fc" id="L118">            String previousChar = allRowElement.stream().findFirst().get().stream().findFirst().get();</span>
+<span class="fc" id="L119">            int count = 1;</span>
+<span class="fc" id="L120">            int cantComb = 0;</span>
+        };
+<span class="fc" id="L122">        allRowElement.forEach(row -&gt; row.forEach(elements -&gt; {</span>
+<span class="fc bfc" id="L123" title="All 2 branches covered.">            if (rowCombinationObj.previousChar.equals(elements)) {</span>
+<span class="fc" id="L124">                rowCombinationObj.count++;</span>
+<span class="fc bfc" id="L125" title="All 2 branches covered.">                if (rowCombinationObj.count &gt;= dnaCantSameLetters) {</span>
+<span class="fc" id="L126">                    rowCombinationObj.cantComb++;</span>
+<span class="fc" id="L127">                    rowCombinationObj.count = 1;</span>
+                }
+            } else {
+<span class="fc" id="L130">                rowCombinationObj.previousChar = elements;</span>
+<span class="fc" id="L131">                rowCombinationObj.count = 1;</span>
+            }
+<span class="fc" id="L133">        }));</span>
+<span class="fc" id="L134">        return rowCombinationObj.cantComb;</span>
+    }
+
+
+
+    /**
+     * Instantiates a new util.
+     */
+<span class="nc" id="L142">    private MatrixManagementUtil() {</span>
+<span class="nc" id="L143">        throw new UnsupportedOperationException(BusinessMessages.UNSUPPORTED_OPERATION.message());</span>
+    }
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
