@@ -184,7 +184,7 @@ Para ejecutar el programa es necesario contar con los siguientes requerimientos:
 > ## **Código e información adicional**
 <div id='id5' />
 ---
-- GitHub, repo url = `https://github.com/Ajosue24/mutants` -> [repositorio](https://github.com/Ajosue24/mutants/)
+- GitHub, repo url = https://github.com/Ajosue24/mutants -> [repositorio](https://github.com/Ajosue24/mutants/)
 - Para Obtenerlo se debe de ejecutar el siguiente comando desde la consola
 
         git clone https://github.com/Ajosue24/mutants.git
