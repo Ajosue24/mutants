@@ -184,10 +184,10 @@ Para ejecutar el programa es necesario contar con los siguientes requerimientos:
 > ## **Código e información adicional**
 <div id='id5' />
 ---
-- GitHub, repo url = `https://github.com/Ajosue24/mutants/tree/mutants_dev` -> [repositorio](https://github.com/Ajosue24/mutants/tree/mutants_dev)
+- GitHub, repo url = `https://github.com/Ajosue24/mutants/` -> [repositorio](https://github.com/Ajosue24/mutants/)
 - Para Obtenerlo se debe de ejecutar el siguiente comando desde la consola
 
-        git clone --single-branch --branch mutants_dev https://github.com/Ajosue24/mutants.git
+        git clone https://github.com/Ajosue24/mutants.git
 
    Al descargar el repositorio y abrirlo en un IDE podemos tener acceso al código y a sus funcionalidades
 - La aplicación al levantarse cuenta con un swagger en la siguiente
