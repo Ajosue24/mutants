@@ -74,6 +74,7 @@ Ejemplo Humano
         <th>G</th>
     </tr>
 </table>
+Ejemplo mutante
 <table>
 <tr>
     <th>A</th>
